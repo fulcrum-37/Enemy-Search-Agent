@@ -42,7 +42,7 @@ public class CreateMap : MonoBehaviour
 
     public void EmptyCell(Vector2Int position, Vector2Int hitPoint)
     {
-        Debug.Log("EmptyCell");
+        //Debug.Log("EmptyCell");
         //Bresenham
         int xa = position.x;
         int xb = hitPoint.x;

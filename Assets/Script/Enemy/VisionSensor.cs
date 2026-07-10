@@ -7,6 +7,8 @@ public class VisionSensor : MonoBehaviour
     RaycastHit hit;
     CellState state;
     CreateMap map;
+    //Texture2D texture;
+    MapVisualizer mapVisualizer;
     private float viewAngle;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,6 +16,7 @@ public class VisionSensor : MonoBehaviour
         viewAngle = 100;
         leftdir = Quaternion.AngleAxis(-viewAngle / 2, Vector3.up) * transform.forward;
         map = GetComponentInParent<CreateMap>();
+        mapVisualizer = GameObject.Find("MapVisualizer").GetComponent<MapVisualizer>();
     }
 
     // Update is called once per frame
@@ -41,6 +44,8 @@ public class VisionSensor : MonoBehaviour
 
         }
 
+        mapVisualizer.ApplyTexture();
+
         return;
     }
 
@@ -51,7 +56,7 @@ public class VisionSensor : MonoBehaviour
 
         if (hit.collider.CompareTag("Wall"))
         {
-            Debug.Log("WallHit");
+            //Debug.Log("WallHit");
             state = CellState.Wall;
             position = map.WorldToGrid(transform.position);
             hitPoint = map.WorldToGrid(hit.point);
@@ -61,7 +66,7 @@ public class VisionSensor : MonoBehaviour
 
         else if (hit.collider.CompareTag("Obstacle"))
         {
-            Debug.Log("ObstacleHit");
+            //Debug.Log("ObstacleHit");
             state = CellState.Obstacle;
             position = map.WorldToGrid(transform.position);
             hitPoint = map.WorldToGrid(hit.point);

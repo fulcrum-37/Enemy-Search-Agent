@@ -8,7 +8,7 @@ public class MapVisualizer : MonoBehaviour
     private const int textureHeight = 100;
     private const int textureWidth = 100;
     Texture2D texture;
-    private RawImage rawImage;
+    RawImage rawImage;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,8 +36,10 @@ public class MapVisualizer : MonoBehaviour
 
     }
 
-    public void MapUpdate(int x, int z,CellState state)
+    public void MapUpdate(int x, int z, CellState state)
     {
+
+        //Debug.Log("MapUpdate");
 
         if (state == CellState.Wall)
             texture.SetPixel(x, z, Color.black);
@@ -48,7 +50,14 @@ public class MapVisualizer : MonoBehaviour
         else
             return;
 
-        texture.Apply();
-        rawImage.texture = texture;
+        //texture.Apply();
+        //rawImage.texture = texture;
     }
+
+    public void ApplyTexture()
+    {
+        texture.Apply();
+        Debug.Log("AppiyTexture");
+    }
+    
 }
