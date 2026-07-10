@@ -131,7 +131,7 @@ public class Enemy : MonoBehaviour
                 break;
 
             case EnemyState.Chase:
-                agent.speed = 3.0f;
+                agent.speed = 2.2f;
                 break;
         }
     }
