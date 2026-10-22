@@ -1,19 +1,37 @@
-
 using System;
+using UnityEditor.Experimental.GraphView;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CreateMap : MonoBehaviour
 {
-    private const int MapWidth = 100;
-    private const int MapHeight = 100;
+    private const int MapWidth = 50;
+    private const int MapHeight = 50;
+    private const int textureHeight = 50;
+    private const int textureWidth = 50;
+    Texture2D texture;
+    RawImage rawImage;
     private CellState[,] map;
-    MapVisualizer mapVisual;
+    //MapVisualizer mapVisual;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        mapVisual = GameObject.Find("MapVisualizer").GetComponent<MapVisualizer>();
+        //mapVisual = GameObject.Find("MapVisualizer").GetComponent<MapVisualizer>();
+        texture = new Texture2D(textureHeight, textureWidth);
+        rawImage = GameObject.Find("MapImage").GetComponent<RawImage>();
         map = new CellState[MapWidth, MapHeight];
+
+        for (int y = 0; y < textureHeight; y++)
+        {
+            for (int x = 0; x < textureWidth; x++)
+            {
+                texture.SetPixel(x, y, Color.gray);
+            }
+        }
+
+        texture.Apply();
+        rawImage.texture = texture;
 
         for (int x = 0; x < MapWidth; x++)
         {
@@ -110,7 +128,28 @@ public class CreateMap : MonoBehaviour
             return;
 
         map[hitPoint.x, hitPoint.y] = state;
-        mapVisual.MapUpdate(hitPoint.x, hitPoint.y, state);
+        MapUpdate(hitPoint.x, hitPoint.y, state);
     }
+
+    public void MapUpdate(int x, int z, CellState state)
+    {
+
+        if (state == CellState.Wall)
+            texture.SetPixel(x, z, Color.black);
+        else if (state == CellState.Obstacle)
+            texture.SetPixel(x, z, Color.green);
+        else if (state == CellState.Empty)
+            texture.SetPixel(x, z, Color.white);
+        else
+            return;
+    }
+
+    public void ApplyTexture(Vector2Int pos)
+    {
+        //texture.SetPixel(pos.x, pos.y, Color.red);
+        texture.Apply();
+        Debug.Log("AppiyTexture");
+    }
+
 
 }

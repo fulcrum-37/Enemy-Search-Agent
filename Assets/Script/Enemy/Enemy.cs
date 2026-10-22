@@ -25,7 +25,6 @@ public class Enemy : MonoBehaviour
     Patrol patrol;
     Patrol2 patrol2;
     Animator animator;
-    CreateMap map;
     VisionSensor sensor;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,7 +36,6 @@ public class Enemy : MonoBehaviour
         currentState = EnemyState.Patrol;
         rayEnemy = GetComponentInChildren<RayCast_Enemy>();
         patrol2 = GetComponent<Patrol2>();
-        map = GetComponent<CreateMap>();
         sensor = GetComponentInChildren<VisionSensor>();
     }
 
@@ -92,7 +90,7 @@ public class Enemy : MonoBehaviour
                 ChangeState(EnemyState.Patrol);
             }
 
-            sensor.EnvironmentScan();
+            sensor.ScanEnvironment();
             Search();
         }
     }
@@ -104,7 +102,7 @@ public class Enemy : MonoBehaviour
             ChangeState(EnemyState.Search);
         }
 
-        sensor.EnvironmentScan();
+        sensor.ScanEnvironment();
         Chase();
     }
 

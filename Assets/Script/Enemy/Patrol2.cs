@@ -24,7 +24,7 @@ public class Patrol2 : MonoBehaviour
 
     public void ExecutePatrol()
     {
-        sensor.EnvironmentScan();
+        sensor.ScanEnvironment();
     }
 
 }

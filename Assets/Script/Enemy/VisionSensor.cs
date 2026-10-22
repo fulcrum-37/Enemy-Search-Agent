@@ -8,7 +8,6 @@ public class VisionSensor : MonoBehaviour
     CellState state;
     CreateMap map;
     //Texture2D texture;
-    MapVisualizer mapVisualizer;
     private float viewAngle;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,7 +15,6 @@ public class VisionSensor : MonoBehaviour
         viewAngle = 100;
         leftdir = Quaternion.AngleAxis(-viewAngle / 2, Vector3.up) * transform.forward;
         map = GetComponentInParent<CreateMap>();
-        mapVisualizer = GameObject.Find("MapVisualizer").GetComponent<MapVisualizer>();
     }
 
     // Update is called once per frame
@@ -25,7 +23,7 @@ public class VisionSensor : MonoBehaviour
 
     }
 
-    public void EnvironmentScan()
+    public void ScanEnvironment()
     {
         int angle = 0;
         leftdir = Quaternion.AngleAxis(-viewAngle / 2, Vector3.up) * transform.forward;
@@ -44,7 +42,10 @@ public class VisionSensor : MonoBehaviour
 
         }
 
-        mapVisualizer.ApplyTexture();
+        Vector2Int pos = map.WorldToGrid(transform.position);
+        map.ApplyTexture(pos);
+
+        //検出評価を入れる
 
         return;
     }
